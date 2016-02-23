@@ -59,7 +59,7 @@ namespace DLib.Weixin
                 }
             }
             string getAccess_tokenUrlTemplate = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
-            string getAccess_tokenUrl = string.Format(getAccess_tokenUrlTemplate, _appid, _appsecret);
+            string getAccess_tokenUrl = string.Format(getAccess_tokenUrlTemplate, APPID, APPSECRET);
             {
                 var result = "";
                 try
@@ -88,8 +88,8 @@ namespace DLib.Weixin
             return ACCESS_TOKEN;
         }
 
-        public static string _appid;
-        public static string _appsecret;
+        private static string _appid;
+        private static string _appsecret;
 
         private static string ACCESS_TOKEN = null;
         private static DateTime? ACCESS_TOKEN_CREATEDATE = null;
