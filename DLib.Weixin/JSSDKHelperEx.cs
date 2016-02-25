@@ -3,6 +3,7 @@ using System.Collections;
 using System.Text;
 using DLib.Weixin;
 using Senparc.Weixin.MP.CommonAPIs;
+using wxlib;
 
 namespace Senparc.Weixin.MP.Helpers
 {
@@ -23,8 +24,8 @@ namespace Senparc.Weixin.MP.Helpers
                 string ticket = string.Empty;
                 obj.timestamp = Convert.ToInt32(JSSDKHelper.GetTimestamp());
                 obj.nonceStr = JSSDKHelper.GetNoncestr();
-                obj.appId = WeixinHelper.APPID;
-                ticket = AccessTokenContainer.TryGetJsApiTicket(obj.appId, WeixinHelper.APPSECRET);
+                obj.appId = wx.APPID;
+                ticket = AccessTokenContainer.TryGetJsApiTicket(obj.appId, wx.APPSECRET);
                 obj.signature = JSSDKHelper.GetSignature(ticket, obj.nonceStr, obj.timestamp.ToString(), url);
             }
             return obj;
