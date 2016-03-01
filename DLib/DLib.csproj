@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DConfig.cs" />
+    <Compile Include="EnumUtil.cs" />
     <Compile Include="InterlockedBoolean.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreadHelper.cs" />
