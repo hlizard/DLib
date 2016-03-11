@@ -30,5 +30,16 @@ namespace DLib
             T result;
             return Enum.TryParse<T>(value, true, out result) ? result : defaultValue;
         }
+
+
+        public static string GetCode<T>(this T value) where T : struct
+        {
+            if (typeof(T).BaseType.Name != "Enum")
+            {
+                throw new NotImplementedException(typeof(T).Name);
+            }
+            string code = (Convert.ToInt32(value)).ToString();
+            return code;
+        }
     }
 }
