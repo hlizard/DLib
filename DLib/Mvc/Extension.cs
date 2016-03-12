@@ -12,7 +12,7 @@ namespace DLib.Mvc
         public static MvcHtmlString DropDownList<TModel, TEnum>(
                     this HtmlHelper<TModel> htmlHelper,
                     string name,
-                    TEnum selectedValue)
+                    TEnum selectedValue) where TEnum : struct
         {
             IEnumerable<TEnum> values = Enum.GetValues(typeof(TEnum))
                                         .Cast<TEnum>();
@@ -20,7 +20,7 @@ namespace DLib.Mvc
                                                 select new SelectListItem()
                                                 {
                                                     Text = value.ToString(),
-                                                    Value = (Convert.ToInt32(value)).ToString(),
+                                                    Value = EnumUtil.GetCode<TEnum>(value),
                                                     Selected = (value.Equals(selectedValue))
                                                 };
             return SelectExtensions.DropDownList(htmlHelper, name, items);
@@ -29,7 +29,16 @@ namespace DLib.Mvc
         public static MvcHtmlString DropDownListFor<TModel, TProperty, TEnum>(
                     this HtmlHelper<TModel> htmlHelper,
                     Expression<Func<TModel, TProperty>> expression,
-                    TEnum selectedValue)
+                    TEnum selectedValue) where TEnum : struct
+        {
+            return DropDownListFor<TModel, TProperty, TEnum>(htmlHelper, expression, selectedValue, EnumUtil.GetCode<TEnum>);
+        }
+
+        public static MvcHtmlString DropDownListFor<TModel, TProperty, TEnum>(
+                    this HtmlHelper<TModel> htmlHelper,
+                    Expression<Func<TModel, TProperty>> expression,
+                    TEnum selectedValue,
+                    Func<TEnum, string> getValue) where TEnum : struct
         {
             IEnumerable<TEnum> values = Enum.GetValues(typeof(TEnum))
                                         .Cast<TEnum>();
@@ -37,7 +46,7 @@ namespace DLib.Mvc
                                                 select new SelectListItem()
                                                 {
                                                     Text = value.ToString(),
-                                                    Value = (Convert.ToInt32(value)).ToString(),
+                                                    Value = getValue(value),
                                                     Selected = (value.Equals(selectedValue))
                                                 };
             return SelectExtensions.DropDownListFor(htmlHelper, expression, items);
