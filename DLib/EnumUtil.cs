@@ -16,7 +16,7 @@ namespace DLib
         //StatusEnum MyStatus = "Active".ToEnum<StatusEnum>();
         public static T ToEnum<T>(this string value)
         {
-            return (T)Enum.Parse(typeof(T), value, true);
+            return ParseEnum<T>(value);
         }
 
         //StatusEnum MyStatus = "Active".ToEnum(StatusEnum.None);
@@ -41,5 +41,51 @@ namespace DLib
             string code = (Convert.ToInt32(value)).ToString();
             return code;
         }
+        
+        public static T ParseEnum<T>(string value, EnumParseBy parseBy)
+        {
+            if(parseBy == EnumParseBy.Code)
+            {
+                int result = int.Parse(value);
+                //return (T)Convert.ChangeType(result, typeof(T));
+                return (T)Enum.ToObject(typeof(T), result);
+            }
+            return ParseEnum<T>(value);
+        }
+        
+        public static T ToEnum<T>(this string value, EnumParseBy parseBy)
+        {
+            return ParseEnum<T>(value, parseBy);
+        }
+        
+        public static T ToEnum<T>(this string value, T defaultValue, EnumParseBy parseBy) where T : struct
+        {
+            if(parseBy == EnumParseBy.Code)
+            {
+                if (value == null || value.Trim() == "")
+                {
+                    return defaultValue;
+                }
+
+                int result;
+                //return int.TryParse(value, out result) ? (T)Enum.ToObject(typeof(T), result) : defaultValue;
+                if(int.TryParse(value, out result))
+                {
+                    var a = (T)Enum.ToObject(typeof(T), result);
+                    return a;
+                }
+                else
+                {
+                    return defaultValue;
+                }
+            }
+            return ToEnum<T>(value, defaultValue);
+        }
+    }
+
+    public enum EnumParseBy
+    {
+        Name,
+        Code
     }
 }
