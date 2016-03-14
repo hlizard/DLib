@@ -20,7 +20,7 @@ namespace DLib
         }
 
         //StatusEnum MyStatus = "Active".ToEnum(StatusEnum.None);
-        public static T ToEnum<T>(this string value, T defaultValue) where T : struct
+        public static T? ToEnum<T>(this string value, T? defaultValue) where T : struct
         {
             if (value == null || value.Trim() == "")
             {
@@ -58,7 +58,7 @@ namespace DLib
             return ParseEnum<T>(value, parseBy);
         }
         
-        public static T ToEnum<T>(this string value, T defaultValue, EnumParseBy parseBy) where T : struct
+        public static T? ToEnum<T>(this string value, T? defaultValue, EnumParseBy parseBy) where T : struct
         {
             if(parseBy == EnumParseBy.Code)
             {

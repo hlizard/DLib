@@ -12,7 +12,7 @@ namespace DLib.Mvc
         public static MvcHtmlString DropDownList<TModel, TEnum>(
                     this HtmlHelper<TModel> htmlHelper,
                     string name,
-                    TEnum selectedValue) where TEnum : struct
+                    TEnum? selectedValue) where TEnum : struct
         {
             IEnumerable<TEnum> values = Enum.GetValues(typeof(TEnum))
                                         .Cast<TEnum>();
@@ -29,7 +29,7 @@ namespace DLib.Mvc
         public static MvcHtmlString DropDownListFor<TModel, TProperty, TEnum>(
                     this HtmlHelper<TModel> htmlHelper,
                     Expression<Func<TModel, TProperty>> expression,
-                    TEnum selectedValue) where TEnum : struct
+                    TEnum? selectedValue) where TEnum : struct
         {
             return DropDownListFor<TModel, TProperty, TEnum>(htmlHelper, expression, selectedValue, EnumUtil.GetCode<TEnum>);
         }
@@ -37,7 +37,7 @@ namespace DLib.Mvc
         public static MvcHtmlString DropDownListFor<TModel, TProperty, TEnum>(
                     this HtmlHelper<TModel> htmlHelper,
                     Expression<Func<TModel, TProperty>> expression,
-                    TEnum selectedValue,
+                    TEnum? selectedValue,
                     Func<TEnum, string> getValue) where TEnum : struct
         {
             IEnumerable<TEnum> values = Enum.GetValues(typeof(TEnum))
