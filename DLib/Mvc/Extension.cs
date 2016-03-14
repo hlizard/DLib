@@ -38,7 +38,8 @@ namespace DLib.Mvc
                     this HtmlHelper<TModel> htmlHelper,
                     Expression<Func<TModel, TProperty>> expression,
                     TEnum? selectedValue,
-                    Func<TEnum, string> getValue) where TEnum : struct
+                    Func<TEnum, string> getValue,
+                    List<SelectListItem> headerItems = null) where TEnum : struct
         {
             IEnumerable<TEnum> values = Enum.GetValues(typeof(TEnum))
                                         .Cast<TEnum>();
@@ -49,7 +50,16 @@ namespace DLib.Mvc
                                                     Value = getValue(value),
                                                     Selected = (value.Equals(selectedValue))
                                                 };
-            return SelectExtensions.DropDownListFor(htmlHelper, expression, items);
+            if (headerItems != null && headerItems.Count > 0)
+            {
+                foreach (var item in headerItems)
+                {
+                    item.Selected = item.Value.Equals(selectedValue);
+                }
+                //headerItems.Union(items);
+                headerItems.AddRange(items);
+            }
+            return SelectExtensions.DropDownListFor(htmlHelper, expression, headerItems);
         }
     }
 }
