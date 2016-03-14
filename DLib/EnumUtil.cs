@@ -83,9 +83,16 @@ namespace DLib
         }
     }
 
-    public enum EnumParseBy
+    public class EnumParseBy
     {
-        Name,
-        Code
+        public static readonly EnumParseBy Name = new EnumParseBy(0);
+        public static readonly EnumParseBy Code = new EnumParseBy(1);
+
+        private int _infoType;
+
+        private EnumParseBy(int infoType)
+        {
+            _infoType = infoType;
+        }
     }
 }
